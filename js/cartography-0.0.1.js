@@ -37,6 +37,15 @@ app.c.initBounds=function(){
 
 app.c.updateTweets=function(){
 	
+	function mapNode(name,loc){
+		var name=name||"tweet";
+		var loc=loc.split(",");
+		this.fill="#ff0";
+		this.r=5;
+		this.name=name;
+		this.latLng=[ parseFloat(loc[0]),parseFloat(loc[1]) ];
+	};
+	
 	$.ajax({
 		url:"http://peopleofthebit.com/dev_club/cartography/php/index.php",
 		dataType:"json",
@@ -44,7 +53,8 @@ app.c.updateTweets=function(){
 		app.m.tweets=[];
 		app.m.tweets=data;
 		for (var i=0;i<app.m.tweets.length;i++){
-			console.log(app.m.tweets[i]);
+			//console.log(app.m.tweets[i]);
+			/*
 			var d={};
 			d.fill="#ff0";
 			d.r=5
@@ -54,6 +64,8 @@ app.c.updateTweets=function(){
 
 			d.latLng=[ parseFloat(loc[0]),parseFloat(loc[1]) ];
 			app.m.mapOptions.markers.push(d);
+			*/
+			app.m.mapOptions.markders.push(new mapNode(app.m.tweets[i].message,app.m.tweets[i].location));
 			}
     	app.m.worldMap=$('#world-map').vectorMap(app.m.mapOptions);
 		}
